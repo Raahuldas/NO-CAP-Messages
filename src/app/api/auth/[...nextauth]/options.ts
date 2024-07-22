@@ -77,8 +77,6 @@ export const authOptions: NextAuthOptions = {
                 token.name = profile.name;
             }
             
-            console.log(token,"***************Token");
-            
           return token
         },
         async session({ session, token }) {

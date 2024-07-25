@@ -6,9 +6,7 @@ import { Button } from './ui/button'
 import { User } from 'next-auth';
 
 function Navbar() {
-    const {data: session, status} = useSession();
-    console.log(session,"session");
-    console.log(status,"status");
+    const {data: session} = useSession();
     
     const user: User = session?.user
     return (

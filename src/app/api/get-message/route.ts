@@ -4,11 +4,11 @@ import dbConnect from "@/lib/dbConnect";
 import mongoose from "mongoose";
 import UserModel from "@/models/user.model";
 
-export async function GET(request:Request) {
+export async function GET(request: Request) {
     await dbConnect()
     try {
         const session = await getServerSession(authOptions);
-        const user: User = session?.user
+        const user: User = session?.user;
 
         if (!session || !user) {
             return Response.json(
@@ -17,27 +17,27 @@ export async function GET(request:Request) {
                     message: "Unauthorized user"
                 },
                 {
-                    status:401
+                    status: 401
                 }
             )
         }
 
-        const userId = new mongoose.Schema.ObjectId(user._id!);
+        const userId = new mongoose.Types.ObjectId(user._id);
 
         const newUser = await UserModel.aggregate([
             {
-                $match: {_id: userId}
+                $match: { _id: userId }
             },
             {
-                $unwind:'$messages'
+                $unwind: '$messages'
             },
             {
-                $sort: {'messages.createdAt': -1}
+                $sort: { 'messages.createdAt': -1 }
             },
             {
                 $group: {
                     _id: '$_id',
-                    messages: {$push: '$messages'}
+                    messages: { $push: '$messages' }
                 }
             }
         ])
@@ -49,7 +49,7 @@ export async function GET(request:Request) {
                     message: "User not found"
                 },
                 {
-                    status:404
+                    status: 404
                 }
             )
         }
@@ -57,22 +57,23 @@ export async function GET(request:Request) {
         return Response.json(
             {
                 success: true,
-                message: newUser[0].messages
+                message: "Message Fetched Successfully",
+                messages: newUser[0].messages
             },
             {
-                status:200
+                status: 200
             }
         )
 
     } catch (error) {
-        console.log("Error fetching messages",error);
+        console.log("Error fetching messages", error);
         return Response.json(
             {
                 success: false,
                 message: "Error fetching message"
             },
             {
-                status:500
+                status: 500
             }
         )
     }

@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema"
+import { z } from "zod"
 
 
 
@@ -29,12 +30,27 @@ function page() {
     resolver: zodResolver(acceptMessageSchema),
   })
 
-  const {register, watch, setValue} = form
+  const { register, watch, setValue } = form
   const acceptMessages = watch("acceptMessages");
 
-  const fetchAcceptMessage = () => {
-    
+  const fetchAcceptMessage = async () => {
+    try {
+      const response = await axios.get<ApiResponse>("/api/accept-messages");
+      console.log(response);
+      setValue('acceptMessages', response.data.isAcceptingMessages);
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>;
+      toast({
+        title: "Error",
+        description: axiosError.response?.data.message,
+        variant: "destructive"
+      })
+    }
   }
+
+  useEffect(() => {
+    fetchAcceptMessage()
+  }, [])
 
   const baseUrl = `${window.location.protocol}/${window.location.host}`;
   let profileUrl;
@@ -48,15 +64,26 @@ function page() {
     setMessages(messages.filter((message) => message._id !== messageId))
   }
 
-  const handleAcceptMessages = () => {
-    console.log("hello");
-    
+  const handleAcceptMessages = async (data:boolean) => {
+    console.log(data, 'data');
+    try {
+      const response = await axios.post("/api/accept-messages", { acceptMessages: data })
+      console.log(response);
+      setValue('acceptMessages', data);
+
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>
+      toast({
+        title: "Error switching message acceptance status",
+        description: axiosError.response?.data.message
+      })
+    }
+
   }
 
   const getMessages = async () => {
     try {
       const response = await axios.get<ApiResponse>("/api/get-message");
-      console.log(response.data.messages)
       setMessages(response.data.messages || []);
 
     } catch (error) {
@@ -100,8 +127,9 @@ function page() {
 
         <div className="my-8 flex items-center gap-4">
           <Switch
-          {...register('acceptMessages')}
-           onCheckedChange={handleAcceptMessages}/>
+            {...register('acceptMessages')}
+            checked={acceptMessages}
+            onCheckedChange={handleAcceptMessages} />
           <span className="">
             Accept Messages
           </span>

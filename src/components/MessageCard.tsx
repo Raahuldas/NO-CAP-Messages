@@ -22,6 +22,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Separator } from "./ui/separator";
 
 type messageCardProps = {
     message: Message;
@@ -54,24 +55,27 @@ function MessageCard({ message, onMessageDelete }: messageCardProps) {
 
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="destructive"><X/></Button>
+                            <Button variant="destructive"><X /></Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                 <AlertDialogDescription>
                                     This action cannot be undone. This will permanently delete your
-                                    account and remove your data from our servers.
+                                    Message from our servers.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={handleDeleteMessage}>Continue</AlertDialogAction>
+                                <AlertDialogAction onClick={handleDeleteMessage} className="bg-red-600">
+                                    Continue
+                                </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
                 </div>
                 <CardDescription>
+                    <Separator className="mb-1" />
                     {dayjs(message.createdAt).format('hh:mm A, DD-MM-YYYY')}
                 </CardDescription>
             </CardHeader>

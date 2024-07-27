@@ -40,13 +40,13 @@ export async function GET(request: Request) {
                     messages: { $push: '$messages' }
                 }
             }
-        ])
+        ])        
 
         if (!newUser || newUser.length == 0) {
             return Response.json(
                 {
                     success: false,
-                    message: "User not found"
+                    message: "There's no message for you"
                 },
                 {
                     status: 404

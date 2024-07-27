@@ -15,13 +15,14 @@ import { Switch } from "@/components/ui/switch"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema"
-import { z } from "zod"
+import { Loader2, RefreshCw } from "lucide-react"
 
 
 
 function page() {
   const { toast } = useToast()
   const [messages, setMessages] = useState<Message[]>([]);
+  const [refreshMessages,setRefreshMessages] = useState(false);
   const { data: session } = useSession();
 
   const user = session?.user as User;
@@ -71,6 +72,10 @@ function page() {
       console.log(response);
       setValue('acceptMessages', data);
 
+      toast({
+        title: "Accept message status updated",
+      })
+
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
       toast({
@@ -82,9 +87,14 @@ function page() {
   }
 
   const getMessages = async () => {
+    setRefreshMessages(true)
     try {
       const response = await axios.get<ApiResponse>("/api/get-message");
       setMessages(response.data.messages || []);
+
+      toast({
+        title: "Messages refreshed"
+      })
 
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
@@ -93,6 +103,8 @@ function page() {
         description: axiosError.response?.data.message,
         variant: "destructive"
       })
+    } finally{
+      setRefreshMessages(false)
     }
   }
 
@@ -135,7 +147,15 @@ function page() {
           </span>
         </div>
 
-        <Separator />
+        <Separator className="mb-4"/>
+        <Button 
+        variant="outline"
+        onClick={getMessages} >
+          {
+            refreshMessages? <Loader2 className="animate-spin"/> : <RefreshCw/>
+          }
+        </Button>
+
         <div className="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
           {messages.length > 0 ? messages.map((message) =>
             <MessageCard

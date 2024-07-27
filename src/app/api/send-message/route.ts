@@ -19,6 +19,18 @@ export async function POST(request: Request) {
                 }
             )
         }
+
+        if (!user.isAcceptingMessages) {
+            return Response.json(
+                {
+                    success: false,
+                    message: "User is not accepting messages"
+                },
+                {
+                    status:400
+                }
+            )
+        }
         
         const newMessage = {content, createdAt: new Date()}
 

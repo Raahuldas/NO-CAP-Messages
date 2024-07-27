@@ -55,7 +55,9 @@ function MessageCard({ message, onMessageDelete }: messageCardProps) {
 
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="destructive"><X /></Button>
+                            <Button variant="destructive" size="sm" >
+                                <X />
+                            </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
@@ -75,7 +77,7 @@ function MessageCard({ message, onMessageDelete }: messageCardProps) {
                     </AlertDialog>
                 </div>
                 <CardDescription>
-                    <Separator className="mb-1" />
+                    <Separator className="my-1" />
                     {dayjs(message.createdAt).format('hh:mm A, DD-MM-YYYY')}
                 </CardDescription>
             </CardHeader>

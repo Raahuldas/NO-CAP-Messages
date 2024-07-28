@@ -15,7 +15,7 @@ import * as z from "zod"
 import { useDebounceCallback } from 'usehooks-ts'
 import { useRouter } from "next/navigation"
 
-function page() {
+function Page() {
     const { toast } = useToast();
     const [username, setUsername] = useState("");
     const [usernameMessage, setUsernameMessage] = useState("");
@@ -144,4 +144,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

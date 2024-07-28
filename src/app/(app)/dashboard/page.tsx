@@ -19,7 +19,7 @@ import { Loader2, RefreshCw } from "lucide-react"
 
 
 
-function page() {
+function Page() {
   const { toast } = useToast()
   const [messages, setMessages] = useState<Message[]>([]);
   const [refreshMessages,setRefreshMessages] = useState(false);
@@ -173,4 +173,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

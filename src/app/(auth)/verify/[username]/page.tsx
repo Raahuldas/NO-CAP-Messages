@@ -12,7 +12,7 @@ import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-function page() {
+function Page() {
     const { toast } = useToast();
     const router = useRouter();
     const form = useForm<z.infer<typeof verifySchema>>({
@@ -73,4 +73,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

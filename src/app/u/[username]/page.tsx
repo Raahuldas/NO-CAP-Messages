@@ -5,13 +5,11 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { messageSchema } from "@/schemas/messageSchema"
@@ -21,7 +19,7 @@ import axios, { AxiosError } from "axios"
 import { useToast } from "@/components/ui/use-toast"
 import { ApiResponse } from "@/types/ApiResponse"
 
-function page() {
+function Page() {
   const params = useParams<{ username: string }>()
   const username = params.username;
   const {toast} =useToast()
@@ -85,4 +83,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

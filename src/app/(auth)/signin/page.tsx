@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 
 
-function page() {
+function Page() {
     const {toast} = useToast();
     const router = useRouter();
     const form = useForm<z.infer<typeof signinSchema>>(
@@ -93,4 +93,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

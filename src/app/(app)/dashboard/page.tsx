@@ -10,7 +10,7 @@ import { ApiResponse } from "@/types/ApiResponse"
 import axios, { AxiosError } from "axios"
 import { User } from "next-auth"
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Switch } from "@/components/ui/switch"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,6 +34,7 @@ function Page() {
   const { register, watch, setValue } = form
   const acceptMessages = watch("acceptMessages");
 
+  useEffect(() => {
   const fetchAcceptMessage = async () => {
     try {
       const response = await axios.get<ApiResponse>("/api/accept-messages");
@@ -49,18 +50,20 @@ function Page() {
     }
   }
 
-  useEffect(() => {
     fetchAcceptMessage()
-  }, [])
+  },[setValue, toast])
 
-  const baseUrl = `${window.location.protocol}/${window.location.host}`;
-  let profileUrl;
-  if (user?.name) {
-    profileUrl = `${baseUrl}/u/${user.name}`
-  } else {
-    profileUrl = `${baseUrl}/u/${user?.username}`
+  let profileUrl: string ="";
+  
+  if (typeof window != "undefined") {
+    const baseUrl = `${window.location.protocol}/${window.location.host}`;
+    if (user?.name) {
+      profileUrl = `${baseUrl}/u/${user.name}`
+    } else {
+      profileUrl = `${baseUrl}/u/${user?.username}`
+    }
   }
-
+    
   const onMessageDelete = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId))
   }
@@ -86,16 +89,16 @@ function Page() {
 
   }
 
-  const getMessages = async () => {
+  const getMessages = useCallback(async () => {
     setRefreshMessages(true)
     try {
       const response = await axios.get<ApiResponse>("/api/get-message");
       setMessages(response.data.messages || []);
-
+      
       toast({
         title: "Messages refreshed"
       })
-
+      
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
       toast({
@@ -106,13 +109,12 @@ function Page() {
     } finally{
       setRefreshMessages(false)
     }
-  }
-
+  },[toast])
+  
   useEffect(() => {
     if (!session || !session.user) return;
-
     getMessages();
-  }, [session])
+  }, [session,getMessages])
 
   if (!session || !session.user) {
     return <div></div>

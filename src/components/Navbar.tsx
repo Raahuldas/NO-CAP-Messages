@@ -14,7 +14,7 @@ function Navbar() {
         <div className='px-1 lg:px-8 py-1 lg:py-3 mx-auto shadow-md bg-slate-900'>
             <div className="flex items-center justify-between w-full">
                 <Link href="/">
-                <Button className="border py-1 md:py-2 md:px-3 rounded-sm bg-slate-300 cursor-pointer">
+                <Button className="border border-gray-900 py-1 md:py-2 md:px-3 rounded-sm bg-slate-600 hover:bg-slate-500 cursor-pointer">
                     🧢 NO-CAP
                 </Button>
                 </Link>

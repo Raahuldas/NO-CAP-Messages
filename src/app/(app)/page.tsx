@@ -14,14 +14,14 @@ import messages from "@/messages.json"
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center px-4 lg:px-0">
         <h1 className="text-4xl font-semibold mb-8 mt-12">
           Welcome to NO-CAP Messages
         </h1>
         <h2 className="text-2xl ">
           Send messages anonymously
         </h2>
-        <Carousel className="w-full max-w-xl"
+        <Carousel className="w-full max-w-xs lg:max-w-xl "
           opts={{
             align: "start",
             loop: true
@@ -57,7 +57,7 @@ export default function Home() {
           <CarouselNext />
         </Carousel>
       </div>
-      <footer className="bg-slate-900 text-white text-center py-2 absolute bottom-0 w-full">
+      <footer className="bg-slate-900 text-white text-center py-2 fixed bottom-0 w-full">
         &copy; 2024 NO-CAP Messages. All rights reserved
       </footer>
     </>

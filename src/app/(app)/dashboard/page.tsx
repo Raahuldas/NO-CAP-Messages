@@ -129,7 +129,7 @@ function Page() {
 
   return (
     <div className='p-6 mx-auto bg-slate-50 min-h-[42rem]' >
-      <div className="w-2/3 mx-auto">
+      <div className="w-full md:w-2/3 mx-auto">
         <h1 className="font-bold text-4xl pt-6 text-center mb-8">
           User Dashboard
         </h1>

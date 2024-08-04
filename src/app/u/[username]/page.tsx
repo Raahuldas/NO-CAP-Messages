@@ -52,7 +52,7 @@ function Page() {
 
   return (
     <div className="w-2/3 mx-auto">
-      <h1 className='text-center text-5xl font-bold my-8'>Public Profile Link</h1>
+      <h1 className='text-center text-2xl md:text-3xl lg:text-5xl font-bold my-8'>Public Profile Link</h1>
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

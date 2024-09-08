@@ -53,7 +53,7 @@ function Page() {
     return (
         <div className="min-h-screen flex justify-center items-center bg-zinc-900">
             <div className="border p-12 rounded w-full sm:w-2/3 md:w-1/2 lg:w-1/3 bg-white ">
-                <h1 className="font-semibold text-3xl text-center mb-2">Signin</h1>
+                <h1 className="font-semibold text-3xl text-center mb-2 drop-shadow-md">Signin</h1>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FormField

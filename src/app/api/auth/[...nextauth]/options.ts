@@ -49,9 +49,14 @@ export const authOptions: NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             profile(profile){
+                console.log(profile,"------profile");
+                
                 return {
                     id: profile.sub,
-                    name: profile.name
+                    name:profile.name,
+                    username: ((profile.given_name + profile.family_name + Math.floor(Math.random()*100)).toString()).toLowerCase(),
+                    email: profile.email,
+                    isVerified: profile.email_verified,
                 }
             },
             authorization: {
@@ -65,16 +70,28 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user, account, profile }) {
-            if (user) {
-                token._id = user._id?.toString(),
-                token.username = user.username,
-                token.isVerified = user.isVerified,
-                token.isAcceptingMessages = user.isAcceptingMessages
 
+            if (user) {
+
+            if (account?.provider == "google") {
+                try {
+                    const existingUser = await UserModel.findOne({email: user.email});
+                    token._id = existingUser?._id?.toString();
+                    token.username = existingUser?.username;
+                    token.isAcceptingMessages = existingUser?.isAcceptingMessages;
+                    token.isVerified = existingUser?.isVerified;
+                } catch (error) {
+                    throw new Error("error while login")
+                }
+            }else{
+                console.log("-----------------user------------",user);
+
+                token._id = user._id?.toString()
+                token.username = user.username
+                token.isVerified = user.isVerified
+                token.isAcceptingMessages = user.isAcceptingMessages
             }
-            if( account?.provider == 'google' && profile){
-                token.id = profile.sub;
-                token.name = profile.name;
+               
             }
             
           return token
@@ -90,6 +107,37 @@ export const authOptions: NextAuthOptions = {
             }
             return session
         },   
+        signIn: async ({account, user}) => {
+            console.log(account, user);
+            
+            if (account?.provider == "google") {
+                try {
+                    const {email, username, id, isVerified} = user;
+
+                    await dbConnect();
+
+                    const existingUser = await UserModel.findOne({email});
+                    if (existingUser) {
+                        return true;
+                    }
+
+                    if (!existingUser) {
+                        await UserModel.create({email, username, googleId:id, isVerified:isVerified})
+                    }
+
+                    return true;
+                } catch (error) {
+                    console.log(error);
+                    throw null
+                }
+            }
+
+            if (account?.provider == "credentials") {
+                return true;
+            }
+
+            return false;
+        }
     },
     pages:{
         signIn:"/signin"

@@ -9,6 +9,8 @@ export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         const user: User = session?.user;
+        console.log(user,"useer");
+        
 
         if (!session || !user) {
             return Response.json(
@@ -27,6 +29,7 @@ export async function GET(request: Request) {
         const newUser = await UserModel.aggregate([
             {
                 $match: { _id: userId }
+                // $match: { $or:[{_id: userId},{email:userEmail}] }
             },
             {
                 $unwind: '$messages'

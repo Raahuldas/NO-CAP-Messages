@@ -56,12 +56,8 @@ function Page() {
   let profileUrl: string ="";
   
   if (typeof window != "undefined") {
-    const baseUrl = `${window.location.protocol}/${window.location.host}`;
-    // if (user?.name) {
-    //   profileUrl = `${baseUrl}/u/${user.name}`
-    // } else {
-    // }
-      profileUrl = `${baseUrl}/u/${user?.username}`
+    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+      profileUrl = `${baseUrl}/u/${user?.username}`;
   }
     
   const onMessageDelete = (messageId: string) => {

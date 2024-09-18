@@ -34,7 +34,6 @@ function Page() {
     })
 
     useEffect(() => {
-        console.log("this is working");
         
         const checkUsernameUniqueness = async () => {
             if (username) {

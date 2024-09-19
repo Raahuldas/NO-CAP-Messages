@@ -139,7 +139,7 @@ function Navbar() {
                                                     <SheetHeader>
                                                         <SheetTitle>Update Username</SheetTitle>
                                                         <SheetDescription>
-                                                            Update your username. Click save when you're done.
+                                                            Update your username. Click save when you are done.
                                                         </SheetDescription>
                                                     </SheetHeader>
                                                     <div className="grid gap-4 py-4 w-full sm:w-1/2 mx-auto">

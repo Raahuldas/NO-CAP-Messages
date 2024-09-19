@@ -97,7 +97,7 @@ function Page() {
                                         <Input placeholder="Username..." {...field}
                                         onChange={(e)=>{
                                             field.onChange(e);
-                                            debouncedUsername(e.target.value)
+                                            debouncedUsername(e.target.value.toLowerCase())
                                         }} />
                                     </FormControl>
                                     <FormMessage />

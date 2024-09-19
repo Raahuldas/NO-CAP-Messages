@@ -135,7 +135,7 @@ function Navbar() {
                                                 Update Username
                                             </SheetTrigger>
                                             
-                                                <SheetContent side={'bottom'}>
+                                                <SheetContent side={'bottom'} >
                                                     <SheetHeader>
                                                         <SheetTitle>Update Username</SheetTitle>
                                                         <SheetDescription>
@@ -157,7 +157,7 @@ function Navbar() {
                                                                                     {...field}
                                                                                     onChange={(e) => {
                                                                                         field.onChange(e);
-                                                                                        debouncedUsername(e.target.value)
+                                                                                        debouncedUsername(e.target.value.toLowerCase())
                                                                                     }}
                                                                                 />
                                                                             </FormControl>

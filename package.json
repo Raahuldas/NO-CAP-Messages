@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -28,7 +29,7 @@
     "embla-carousel-react": "^8.1.7",
     "lucide-react": "^0.408.0",
     "mongoose": "^8.5.0",
-    "next": "14.2.5",
+    "next": "^14.2.12",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
